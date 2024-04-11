@@ -39,11 +39,12 @@ router.post("/auth/login", async (req, res) => {
     // comparing passwords
 
     if (await bcrypt.compare(req.body.password, user.password)) {
-      const accessToken = jwt.sign(
+      const accessToken = generateAccessToken(user);
+      const refreshToken = jwt.sign(
         user.toJSON(),
-        process.env.ACCESS_TOKEN_SECRET
+        process.env.REFRESH_TOKEN_SECRET
       );
-      res.json({ accessToken: accessToken });
+      res.json({ accessToken: accessToken, refreshToken: refreshToken });
     } else {
       res.send("Not Allowed");
     }
@@ -66,9 +67,9 @@ router.get("/room", authenticateToken, (req, res) => {
 });
 
 const generateAccessToken = (user) => {
-  return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: '15s'
+  return jwt.sign(user.toJSON(), process.env.ACCESS_TOKEN_SECRET, {
+    expiresIn: "60s",
   });
-}
+};
 
 export default router;
