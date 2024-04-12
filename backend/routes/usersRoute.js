@@ -44,6 +44,7 @@ router.post("/auth/login", async (req, res) => {
         user.toJSON(),
         process.env.REFRESH_TOKEN_SECRET
       );
+      res.cookie("refreshtoken", refreshToken, { httpOnly: true });
       res.json({ accessToken: accessToken, refreshToken: refreshToken });
     } else {
       res.send("Not Allowed");
