@@ -5,6 +5,8 @@ import jwt from "jsonwebtoken";
 
 import { User } from "../models/User.js";
 
+import generateAccessToken from "../utils/jwtUtils.js"
+
 import authenticateToken from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
@@ -83,11 +85,5 @@ router.get("/auth/users", authenticateToken, async (req, res) => {
 router.get("/room", authenticateToken, (req, res) => {
   res.send(req.user);
 });
-
-const generateAccessToken = (user) => {
-  return jwt.sign(user.toJSON(), process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: "20s",
-  });
-};
 
 export default router;
