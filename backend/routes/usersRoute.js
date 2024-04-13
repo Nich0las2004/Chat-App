@@ -5,14 +5,14 @@ import jwt from "jsonwebtoken";
 
 import { User } from "../models/User.js";
 
-import generateAccessToken from "../utils/jwtUtils.js"
+import generateAccessToken from "../utils/jwtUtils.js";
 
 import authenticateToken from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
 router.post("/token", (req, res) => {
-  const refreshToken = req.cookies.refreshtoken;
+  const refreshToken = req.body.token;
   if (refreshToken == null) {
     return res.sendStatus(401);
   }
@@ -23,8 +23,8 @@ router.post("/token", (req, res) => {
     if (err) {
       return res.sendStatus(403);
     }
-    // const accessToken = generateAccessToken(user.stringify);
-    res.json({refreshToken: refreshToken});
+    const accessToken = generateAccessToken({ userName : user.userName, email: user.email, password: user.password });
+    res.json({ accessToken });
   });
 });
 
