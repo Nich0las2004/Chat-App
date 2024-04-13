@@ -1,6 +1,8 @@
 import express from "express";
 import connectDB from "./config/db.js";
 
+import cookieParser from "cookie-parser";
+
 import { Server } from "socket.io";
 import { createServer } from "http"
 
@@ -13,6 +15,8 @@ const app = express();
 connectDB();
 
 app.use(express.json());
+
+app.use(cookieParser());
 
 app.use("/", usersRoute);
 

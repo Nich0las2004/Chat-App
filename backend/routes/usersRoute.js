@@ -9,6 +9,23 @@ import authenticateToken from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
+router.post("/token", (req, res) => {
+  const refreshToken = req.cookies.refreshtoken;
+  if (refreshToken == null) {
+    return res.sendStatus(401);
+  }
+  if (!refreshToken) {
+    return res.sendStatus(403);
+  }
+  jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+    if (err) {
+      return res.sendStatus(403);
+    }
+    // const accessToken = generateAccessToken(user.stringify);
+    res.json({refreshToken: refreshToken});
+  });
+});
+
 router.post("/auth/register", async (req, res) => {
   try {
     // hashing a password
@@ -69,7 +86,7 @@ router.get("/room", authenticateToken, (req, res) => {
 
 const generateAccessToken = (user) => {
   return jwt.sign(user.toJSON(), process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: "60s",
+    expiresIn: "20s",
   });
 };
 
