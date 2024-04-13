@@ -12,7 +12,7 @@ import authenticateToken from "../middlewares/authMiddleware.js";
 const router = express.Router();
 
 router.post("/token", (req, res) => {
-  const refreshToken = req.body.token;
+  const refreshToken = req.cookies.accessToken;
   if (refreshToken == null) {
     return res.sendStatus(401);
   }
@@ -23,7 +23,11 @@ router.post("/token", (req, res) => {
     if (err) {
       return res.sendStatus(403);
     }
-    const accessToken = generateAccessToken({ userName : user.userName, email: user.email, password: user.password });
+    const accessToken = generateAccessToken({
+      userName: user.userName,
+      email: user.email,
+      password: user.password,
+    });
     res.json({ accessToken });
   });
 });
@@ -46,6 +50,12 @@ router.post("/auth/register", async (req, res) => {
   } catch (e) {
     console.log(e);
   }
+});
+
+router.delete("/auth/delete", (req, res) => {
+  res.clearCookie("refreshtoken");
+
+  res.sendStatus(204);
 });
 
 router.post("/auth/login", async (req, res) => {
