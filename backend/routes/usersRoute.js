@@ -52,7 +52,7 @@ router.post("/auth/register", async (req, res) => {
   }
 });
 
-router.delete("/auth/delete", (req, res) => {
+router.delete("/auth/logout", (req, res) => {
   res.clearCookie("refreshtoken");
 
   res.sendStatus(204);
