@@ -12,7 +12,7 @@ import authenticateToken from "../middlewares/authMiddleware.js";
 const router = express.Router();
 
 router.post("/token", (req, res) => {
-  const refreshToken = req.cookies.accessToken;
+  const refreshToken = req.cookies.refreshtoken;
   if (refreshToken == null) {
     return res.sendStatus(401);
   }
