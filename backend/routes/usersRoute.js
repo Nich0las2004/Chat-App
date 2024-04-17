@@ -87,4 +87,10 @@ router.get("/room", authenticateToken, (req, res) => {
   res.send(req.user);
 });
 
+router.get("/room/:roomName", (req, res) => {
+  const { roomName } = req.params;
+
+  res.send(roomName);
+});
+
 export default router;
