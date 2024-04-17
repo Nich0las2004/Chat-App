@@ -83,15 +83,6 @@ router.post("/auth/login", async (req, res) => {
   }
 });
 
-router.get("/auth/users", authenticateToken, async (req, res) => {
-  try {
-    const users = await User.find({});
-    return res.json(users);
-  } catch (e) {
-    console.log(e);
-  }
-});
-
 router.get("/room", authenticateToken, (req, res) => {
   res.send(req.user);
 });
