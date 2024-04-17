@@ -14,12 +14,24 @@ const io = new Server(server);
 
 io.on("connection", (socket) => {
   console.log(socket.id);
-  socket.on("send-message", (message) => {
-    socket.broadcast.emit("receive-message", message);
+  socket.on("send-message", (message, room) => {
+    io.to(room).emit("receive-message", message);
   });
-  socket.on("join-room", (room,cb) => {
-    socket.join(room);
-    cb(`Joined ${room}`);
+  socket.on("create-room", (room, cb) => {
+    if (!io.sockets.adapter.rooms.has(room)) {
+      socket.join(room);
+      cb(`Room ${room} created`);
+    } else {
+      cb(`Room ${room} already exists`);
+    }
+  });
+  socket.on("join-room", (room, cb) => {
+    if (io.sockets.adapter.rooms.has(room)) {
+      socket.join(room);
+      cb(`Joined ${room}`);
+    } else {
+      cb(`Room ${room} does not exist`);
+    }
   });
 });
 
