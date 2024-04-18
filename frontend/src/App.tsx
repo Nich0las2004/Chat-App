@@ -1,7 +1,7 @@
-import React from "react";
+import SignIn from "./components/SignIn";
 
 const App = () => {
-  return <div className="bg-red-400  text-white">App</div>;
+  return <SignIn />;
 };
 
 export default App;
