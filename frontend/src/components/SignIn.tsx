@@ -1,11 +1,9 @@
-import Footer from "./Footer";
-
 const SignIn = () => {
   return (
     <div className="relative flex min-h-screen  antialiased flex-col justify-center overflow-hidden bg-gray-900 py-6 sm:py-12">
       <div className="bg-gray-900  relative py-3 sm:w-96 mx-auto text-center">
         <span className="text-2xl font-light text-white">
-          Login to your account
+          Welcome to ChatWave!
         </span>
         <div className="mt-4 bg-white shadow-md rounded-lg text-left">
           <div className="h-2 bg-purple-400 rounded-t-md"></div>
@@ -48,7 +46,6 @@ const SignIn = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };
