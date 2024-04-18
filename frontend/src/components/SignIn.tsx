@@ -1,42 +1,54 @@
+import Footer from "./Footer";
+
 const SignIn = () => {
   return (
-    <div className="h-screen bg-gray-900 flex justify-center items-center">
-      <div className="h-4/6 w-2/6 bg-red-900 flex justify-center items-center">
-        <div>
-          <h1>Welcome to ChatWave</h1>
-          <p>A real-time chat application for seamless communication</p>
-          <div>
-            <form className="w-full h-5/6 p-8 bg-gray-900 flex flex-col items-center justify-center">
-              <h2 className="text-2xl font-bold mb-4">Sign In</h2>
-              <label className="text-white" htmlFor="nickname">
-                Nickname
-              </label>
-              <input
-                type="email"
-                id="nickname"
-                name="nickname"
-                className="rounded w-full px-3"
-              />
-              <label className="text-white" htmlFor="password">
-                Password
-              </label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                className="rounded w-full px-3"
-              />
+    <div className="relative flex min-h-screen  antialiased flex-col justify-center overflow-hidden bg-gray-900 py-6 sm:py-12">
+      <div className="bg-gray-900  relative py-3 sm:w-96 mx-auto text-center">
+        <span className="text-2xl font-light text-white">
+          Login to your account
+        </span>
+        <div className="mt-4 bg-white shadow-md rounded-lg text-left">
+          <div className="h-2 bg-purple-400 rounded-t-md"></div>
+          <div className="px-8 py-6 bg-gray-900">
+            <label
+              htmlFor="nickname"
+              className="block font-semibold text-white"
+            >
+              {" "}
+              Nickname{" "}
+            </label>
+            <input
+              type="text"
+              id="nickname"
+              className="border w-full h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md"
+            />
+            <label
+              htmlFor="password"
+              className="block mt-3 font-semibold text-white"
+            >
+              {" "}
+              Password{" "}
+            </label>
+            <input
+              type="password"
+              id="password"
+              className="border w-full h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md"
+            />
+            <div className="flex justify-between items-baseline">
               <button
                 type="submit"
-                className="w-full text-white rounded bg-indigo-400"
+                className="mt-4 bg-purple-500 text-white py-2 px-6 rounded-md hover:bg-purple-600"
               >
-                Sign In
+                Login
               </button>
-            </form>
+              <a href="#" className="text-sm hover:underline text-purple-400">
+                New User?
+              </a>
+            </div>
           </div>
-          <div>Click here to register</div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
