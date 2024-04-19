@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <div className="flex flex-col rounded-3xl">
+    <footer className="flex flex-col rounded-3xl">
       <div className="backdrop-blur-3xl text-sm rounded-2xl text-neutral-500 p-6 fixed bottom-8 left-1/2 transform -translate-x-1/2 w-96">
         <div className="flex justify-center items-center">
           <div className="flex mt-1">
@@ -38,7 +38,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-    </div>
+    </footer>
   );
 };
 
