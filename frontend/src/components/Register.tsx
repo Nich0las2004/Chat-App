@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Register = () => {
   return (
     <div className="h-screen bg-gray-900 flex justify-center items-center">
@@ -14,7 +16,7 @@ const Register = () => {
               Username
             </label>
             <input
-              className="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none"
+              className="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none focus:ring-indigo-600 focus:ring-1 rounded-md"
               type="text"
               name="username"
               id="username"
@@ -28,7 +30,7 @@ const Register = () => {
               Email
             </label>
             <input
-              className="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none"
+              className="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none focus:ring-indigo-600 focus:ring-1 rounded-md"
               type="text"
               name="email"
               id="email"
@@ -42,7 +44,7 @@ const Register = () => {
               Password
             </label>
             <input
-              className="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none"
+              className="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none focus:ring-indigo-600 focus:ring-1 rounded-md"
               type="text"
               name="password"
               id="password"
@@ -56,7 +58,7 @@ const Register = () => {
               Confirm password
             </label>
             <input
-              className="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none"
+              className="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none focus:ring-indigo-600 focus:ring-1 rounded-md"
               type="text"
               name="confirm"
               id="confirm"
@@ -68,12 +70,14 @@ const Register = () => {
           >
             Register
           </button>
-          <button
-            type="submit"
-            className="w-full mt-6 mb-3 bg-indigo-100 rounded-lg px-4 py-2 text-lg text-gray-800 tracking-wide font-semibold font-sans"
-          >
-            Login
-          </button>
+          <Link to="/login">
+            <button
+              type="submit"
+              className="w-full mt-6 mb-3 bg-indigo-100 rounded-lg px-4 py-2 text-lg text-gray-800 tracking-wide font-semibold font-sans"
+            >
+              Login
+            </button>
+          </Link>
         </form>
       </div>
     </div>

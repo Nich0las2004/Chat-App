@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const SignIn = () => {
   return (
     <div className="relative flex min-h-screen  antialiased flex-col justify-center overflow-hidden bg-gray-900 py-6 sm:py-12">
@@ -39,9 +41,9 @@ const SignIn = () => {
               >
                 Login
               </button>
-              <a href="#" className="text-sm hover:underline text-purple-400">
+              <Link to="/register" className="text-sm hover:underline text-purple-400">
                 New User?
-              </a>
+              </Link>
             </div>
           </div>
         </div>
