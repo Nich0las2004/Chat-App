@@ -1,14 +1,15 @@
-import SignIn from "./components/SignIn";
-import Register from "./components/Register";
-import Footer from "./components/Footer";
+import { Route, Routes, Navigate } from "react-router-dom";
+
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
 
 const App = () => {
   return (
-    <>
-      <Register />
-      {/* <SignIn /> */}
-      <Footer />
-    </>
+    <Routes>
+      <Route path="/" element={<Navigate to="/login" />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/register" element={<RegisterPage />} />
+    </Routes>
   );
 };
 
