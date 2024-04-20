@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link, redirect } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, Navigate, redirect } from "react-router-dom";
 import axios from "axios";
 
 const SignInForm = () => {
@@ -8,10 +8,10 @@ const SignInForm = () => {
     password: "",
   });
 
+  const [loggedIn, setLoggedIn] = useState(false);
+
   const submit = async (e: any) => {
     e.preventDefault();
-
-    // successful response returns accesstoken and refreshtoken, while unsuccessful one logs "Not allowed"
 
     try {
       const response = await axios.post(`http://localhost:5555/auth/login`, {
@@ -26,12 +26,15 @@ const SignInForm = () => {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-
-      redirect("/room");
+      setLoggedIn(true);
     } catch (e) {
       console.log(e);
     }
   };
+
+  if (loggedIn) {
+    return <Navigate to="/room" />;
+  }
 
   return (
     <section className="mt-4 bg-white shadow-md rounded-lg text-left">
