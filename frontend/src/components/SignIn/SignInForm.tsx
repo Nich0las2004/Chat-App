@@ -1,12 +1,15 @@
-import { useEffect, useState } from "react";
-import { Link, Navigate, redirect } from "react-router-dom";
+import { useState } from "react";
+import { Link, Navigate } from "react-router-dom";
 import axios from "axios";
+import SignInError from "./SignInError";
 
 const SignInForm = () => {
   const [input, setInput] = useState({
     userName: "",
     password: "",
   });
+
+  const [error, setError] = useState<string | null>(null);
 
   const [loggedIn, setLoggedIn] = useState(false);
 
@@ -28,7 +31,7 @@ const SignInForm = () => {
       });
       setLoggedIn(true);
     } catch (e) {
-      console.log(e);
+      setError("Invalid username or password");
     }
   };
 
@@ -67,6 +70,11 @@ const SignInForm = () => {
           id="password"
           className="border w-full h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md"
         />
+
+        {/* incorrect login data  */}
+
+        {error && <SignInError message={error} />}
+
         <div className="flex justify-between items-baseline">
           <button
             type="submit"
