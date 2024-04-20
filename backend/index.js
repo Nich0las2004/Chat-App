@@ -1,6 +1,8 @@
 import express from "express";
 import connectDB from "./config/db.js";
 
+import cors from "cors";
+
 import cookieParser from "cookie-parser";
 
 import { Server } from "socket.io";
@@ -40,6 +42,12 @@ io.on("connection", (socket) => {
 connectDB();
 
 app.use(express.json());
+
+app.use(
+  cors({
+    origin: `http://localhost:5173`,
+  })
+);
 
 app.use(cookieParser());
 
