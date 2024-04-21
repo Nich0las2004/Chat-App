@@ -1,8 +1,28 @@
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useState } from "react";
 
 const RegisterForm = () => {
+  const [passwordsMatch, setPasswordsMatch] = useState(false);
+  const [input, setInput] = useState({
+    userName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+
+    await axios.post("http://localhost:5555/auth/register", {
+      userName: input.userName,
+      email: input.email,
+      password: input.password,
+    });
+  };
+
   return (
-    <section>
+    <form onSubmit={handleSubmit}>
       <div>
         <label
           className="text-white font-semibold block my-3 text-md"
@@ -11,7 +31,10 @@ const RegisterForm = () => {
           Username
         </label>
         <input
-          className="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none focus:ring-indigo-600 focus:ring-1 rounded-md"
+          onChange={(e) => {
+            setInput({ ...input, userName: e.target.value });
+          }}
+          className="w-full bg-gray-100 px-4 py-2 focus:outline-none focus:ring-indigo-600 focus:ring-1 rounded-md"
           type="text"
           name="username"
           id="username"
@@ -25,7 +48,10 @@ const RegisterForm = () => {
           Email
         </label>
         <input
-          className="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none focus:ring-indigo-600 focus:ring-1 rounded-md"
+          onChange={(e) => {
+            setInput({ ...input, email: e.target.value });
+          }}
+          className="w-full bg-gray-100 px-4 py-2 focus:outline-none focus:ring-indigo-600 focus:ring-1 rounded-md"
           type="text"
           name="email"
           id="email"
@@ -39,8 +65,11 @@ const RegisterForm = () => {
           Password
         </label>
         <input
-          className="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none focus:ring-indigo-600 focus:ring-1 rounded-md"
-          type="text"
+          onChange={(e) => {
+            setInput({ ...input, password: e.target.value });
+          }}
+          className="w-full bg-gray-100 px-4 py-2 focus:outline-none focus:ring-indigo-600 focus:ring-1 rounded-md"
+          type="password"
           name="password"
           id="password"
         />
@@ -53,8 +82,11 @@ const RegisterForm = () => {
           Confirm password
         </label>
         <input
-          className="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none focus:ring-indigo-600 focus:ring-1 rounded-md"
-          type="text"
+          onChange={(e) => {
+            setInput({ ...input, confirmPassword: e.target.value });
+          }}
+          className="w-full bg-gray-100 px-4 py-2 focus:outline-none focus:ring-indigo-600 focus:ring-1 rounded-md"
+          type="password"
           name="confirm"
           id="confirm"
         />
@@ -73,7 +105,7 @@ const RegisterForm = () => {
           Login
         </button>
       </Link>
-    </section>
+    </form>
   );
 };
 
