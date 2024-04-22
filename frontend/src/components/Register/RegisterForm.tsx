@@ -1,6 +1,12 @@
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+const errorMessages = [
+  "Username should be 3-16 characters long and should not include special characters!",
+  "Email should be valid!",
+  "Passwords do not match!",
+];
 
 const RegisterForm = () => {
   const [passwordsMatch, setPasswordsMatch] = useState(false);
@@ -11,6 +17,10 @@ const RegisterForm = () => {
     confirmPassword: "",
   });
 
+  useEffect(() => {
+    
+  }, [])
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
@@ -19,6 +29,14 @@ const RegisterForm = () => {
       email: input.email,
       password: input.password,
     });
+
+    if (input.password !== input.confirmPassword) {
+      setPasswordsMatch(false);
+    } else {
+      setPasswordsMatch(true);
+    }
+
+    console.log(passwordsMatch);
   };
 
   return (
@@ -39,6 +57,9 @@ const RegisterForm = () => {
           name="username"
           id="username"
         />
+        {!/^[a-zA-Z0-9]{3,16}$/.test(input.userName) && (
+          <span className="text-red-600">{errorMessages[0]}</span>
+        )}
       </div>
       <div>
         <label
@@ -56,6 +77,7 @@ const RegisterForm = () => {
           name="email"
           id="email"
         />
+        {errorMessages[1]}
       </div>
       <div>
         <label
@@ -90,6 +112,7 @@ const RegisterForm = () => {
           name="confirm"
           id="confirm"
         />
+        {errorMessages[2]}
       </div>
       <button
         type="submit"
