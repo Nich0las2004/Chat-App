@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import emailValidator from "email-validator";
 
 const errorMessages = [
   "Username should be 3-16 characters long and should not include special characters!",
@@ -17,9 +18,7 @@ const RegisterForm = () => {
     confirmPassword: "",
   });
 
-  useEffect(() => {
-    
-  }, [])
+  useEffect(() => {}, []);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -77,7 +76,9 @@ const RegisterForm = () => {
           name="email"
           id="email"
         />
-        {errorMessages[1]}
+        {!emailValidator.validate(input.email) && (
+          <span className="text-red-600">{errorMessages[1]}</span>
+        )}
       </div>
       <div>
         <label
