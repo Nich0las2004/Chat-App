@@ -22,11 +22,10 @@ const RegisterForm = () => {
     !/^[a-zA-Z0-9]{3,16}$/.test(input.userName) ||
     !emailValidator.validate(input.email);
 
-  console.log(registerDisabled);
-
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if (input.password != input.confirmPassword) {
+
+    if (input.password !== input.confirmPassword) {
       setPasswordsMatch(false);
     } else {
       setPasswordsMatch(true);
@@ -124,6 +123,8 @@ const RegisterForm = () => {
         type="submit"
         className={`w-full mt-6 ${
           registerDisabled ? "bg-indigo-400" : "bg-indigo-600"
+        } ${
+          registerDisabled && "cursor-not-allowed"
         } rounded-lg px-4 py-2 text-lg text-white tracking-wide font-semibold font-sans`}
         disabled={registerDisabled}
       >
