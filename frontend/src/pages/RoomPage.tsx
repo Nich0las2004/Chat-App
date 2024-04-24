@@ -1,4 +1,16 @@
+import { useEffect } from "react";
+import { io } from "socket.io-client";
+
 const RoomPage = () => {
+  useEffect(() => {
+    const socket = io("http://localhost:5555/room", {
+      transports: ["websocket"],
+    });
+    socket.on("connect", () => {
+      console.log(socket.connected);
+    });
+  }, []);
+
   return (
     <div className="flex flex-col h-screen">
       <div className="flex-grow bg-gray-200 p-4 overflow-y-auto"></div>
