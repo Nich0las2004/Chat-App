@@ -30,6 +30,7 @@ const SignInForm = () => {
       });
 
       const accessToken = response.data.accessToken;
+      const refreshToken = response.data.refreshToken;
 
       await axios.get(`http://localhost:5555/room`, {
         headers: {
@@ -46,7 +47,7 @@ const SignInForm = () => {
       dispatch(
         login({
           isAuthenticated: true,
-          refreshToken: null,
+          refreshToken: refreshToken,
           accessToken: accessToken,
         })
       );
