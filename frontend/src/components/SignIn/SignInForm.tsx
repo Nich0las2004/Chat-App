@@ -1,9 +1,16 @@
 import { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import axios from "axios";
+
+import { setUser } from "../../features/userSlice";
+import { login } from "../../features/authSlice";
+
 import SignInError from "./SignInError";
+import { useDispatch } from "react-redux";
 
 const SignInForm = () => {
+  const dispatch = useDispatch();
+
   const [input, setInput] = useState({
     userName: "",
     password: "",
@@ -30,6 +37,19 @@ const SignInForm = () => {
         },
       });
       setLoggedIn(true);
+      dispatch(
+        setUser({
+          username: input.userName,
+          password: input.password,
+        })
+      );
+      dispatch(
+        login({
+          isAuthenticated: true,
+          refreshToken: null,
+          accessToken: accessToken,
+        })
+      );
     } catch (e) {
       setError("Invalid username or password");
     }
