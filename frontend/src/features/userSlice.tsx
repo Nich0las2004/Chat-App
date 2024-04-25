@@ -11,10 +11,15 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUser(state, action) {
-        state.username = action.payload.username,
-        state.email = action.payload.email,
-        state.password = action.payload.password,
-    }
+      state.username = action.payload.username;
+      state.email = action.payload.email;
+      state.password = action.payload.password;
+    },
+    resetUser(state) {
+      state.username = null;
+      state.email = null;
+      state.password = null;
+    },
   },
 });
 
