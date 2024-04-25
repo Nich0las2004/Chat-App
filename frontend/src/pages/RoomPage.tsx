@@ -1,15 +1,36 @@
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { io } from "socket.io-client";
+import axios from "axios";
 
 const RoomPage = () => {
+  const accessToken = useSelector(
+    (state: object) => (state as any).auth.accessToken
+  );
+
   useEffect(() => {
-    const socket = io("http://localhost:5555/room", {
+    sendToken()
+      .then(() => setUpSocketIO())
+      .catch(() => console.log("Error during sending token"));
+  }, []);
+
+  const sendToken = async () => {
+    await axios
+      .get("http://localhost:5555/room", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+  };
+
+  const setUpSocketIO = () => {
+    const socket = io("http://localhost:5555", {
       transports: ["websocket"],
     });
     socket.on("connect", () => {
       console.log(socket.connected);
     });
-  }, []);
+  };
 
   return (
     <div className="flex flex-col h-screen">
