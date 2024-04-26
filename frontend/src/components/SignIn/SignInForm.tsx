@@ -23,37 +23,36 @@ const SignInForm = () => {
   const submit = async (e: any) => {
     e.preventDefault();
 
-    try {
-      const response = await axios.post(`http://localhost:5555/auth/login`, {
+    await axios
+      .post(`http://localhost:5555/auth/login`, {
         userName: input.userName,
         password: input.password,
-      });
+      })
+      .then(async (res) => {
+        const accessToken = res.data.accessToken;
+        const refreshToken = res.data.refreshToken;
 
-      const accessToken = response.data.accessToken;
-      const refreshToken = response.data.refreshToken;
-
-      await axios.get(`http://localhost:5555/room`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      setLoggedIn(true);
-      dispatch(
-        setUser({
-          username: input.userName,
-          password: input.password,
-        })
-      );
-      dispatch(
-        login({
-          isAuthenticated: true,
-          refreshToken: refreshToken,
-          accessToken: accessToken,
-        })
-      );
-    } catch (e) {
-      setError("Invalid username or password");
-    }
+        await axios.get(`http://localhost:5555/room`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        setLoggedIn(true);
+        dispatch(
+          setUser({
+            username: input.userName,
+            password: input.password,
+          })
+        );
+        dispatch(
+          login({
+            isAuthenticated: true,
+            refreshToken: refreshToken,
+            accessToken: accessToken,
+          })
+        );
+      })
+      .catch(() => setError("Invalid username or password"));
   };
 
   if (loggedIn) {
