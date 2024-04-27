@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import emailValidator from "email-validator";
 
 const errorMessages = [
   "Username should be 3-16 characters long and should not include special characters!",
   "Email should be valid!",
-  "Passwords do not match!",
+  "Passwords should match and be at least 8 characters!",
 ];
 
 const RegisterForm = () => {
@@ -18,24 +18,30 @@ const RegisterForm = () => {
     confirmPassword: "",
   });
 
+  const passwordValidation =
+    passwordsMatch && /^[a-zA-Z0-9]{8,}$/.test(input.password);
+
   const registerDisabled =
     !/^[a-zA-Z0-9]{3,16}$/.test(input.userName) ||
-    !emailValidator.validate(input.email);
+    !emailValidator.validate(input.email) ||
+    !passwordsMatch;
 
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-
+  useEffect(() => {
     if (input.password !== input.confirmPassword) {
       setPasswordsMatch(false);
     } else {
       setPasswordsMatch(true);
     }
+  }, [input.password, input.confirmPassword]);
 
-    await axios.post("http://localhost:5555/auth/register", {
-      userName: input.userName,
-      email: input.email,
-      password: input.password,
-    });
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+
+    // await axios.post("http://localhost:5555/auth/register", {
+    //   userName: input.userName,
+    //   email: input.email,
+    //   password: input.password,
+    // });
   };
 
   return (
@@ -113,7 +119,7 @@ const RegisterForm = () => {
           name="confirm"
           id="confirm"
         />
-        {!passwordsMatch && (
+        {!passwordValidation && (
           <span className="text-red-600">{errorMessages[2]}</span>
         )}
       </div>
