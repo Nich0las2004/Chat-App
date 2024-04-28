@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import emailValidator from "email-validator";
+import RegisterSuccess from "./RegisterSuccess";
 
 const errorMessages = [
   "Username should be 3-16 characters long and should not include special characters!",
@@ -10,7 +11,8 @@ const errorMessages = [
 ];
 
 const RegisterForm = () => {
-  const [passwordsMatch, setPasswordsMatch] = useState(false);
+  const [passwordsMatch, setPasswordsMatch] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
   const [input, setInput] = useState({
     userName: "",
     email: "",
@@ -37,15 +39,19 @@ const RegisterForm = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    // await axios.post("http://localhost:5555/auth/register", {
-    //   userName: input.userName,
-    //   email: input.email,
-    //   password: input.password,
-    // });
+    await axios
+      .post("http://localhost:5555/auth/register", {
+        userName: input.userName,
+        email: input.email,
+        password: input.password,
+      })
+      .then(() => setShowModal(true))
+      .catch(() => setShowModal(false));
   };
 
   return (
     <form onSubmit={handleSubmit}>
+      <RegisterSuccess isVisible={showModal} />
       <div>
         <label
           className="text-white font-semibold block my-3 text-md"
