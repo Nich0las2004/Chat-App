@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import emailValidator from "email-validator";
 import RegisterSuccess from "./RegisterSuccess";
 
@@ -8,11 +8,13 @@ const errorMessages = [
   "Username should be 3-16 characters long and should not include special characters!",
   "Email should be valid!",
   "Passwords should match and be at least 8 characters!",
+  "User with that username already exists!",
 ];
 
 const RegisterForm = () => {
   const [passwordsMatch, setPasswordsMatch] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [userNameExists, setUserNameExists] = useState<boolean>(false);
   const [input, setInput] = useState({
     userName: "",
     email: "",
@@ -26,7 +28,7 @@ const RegisterForm = () => {
   const registerDisabled =
     !/^[a-zA-Z0-9]{3,16}$/.test(input.userName) ||
     !emailValidator.validate(input.email) ||
-    !passwordsMatch;
+    !passwordValidation;
 
   useEffect(() => {
     if (input.password !== input.confirmPassword) {
@@ -36,22 +38,37 @@ const RegisterForm = () => {
     }
   }, [input.password, input.confirmPassword]);
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     await axios
-      .post("http://localhost:5555/auth/register", {
+      .post("http://localhost:5555/auth/check-username", {
         userName: input.userName,
-        email: input.email,
-        password: input.password,
       })
-      .then(() => setShowModal(true))
-      .catch(() => setShowModal(false));
+      .then((res) => {
+        if (res.data.exists) {
+          setUserNameExists(true);
+        } else {
+          setUserNameExists(false);
+        }
+      })
+      .catch((e) => console.log(e));
+
+    if (!userNameExists) {
+      await axios
+        .post("http://localhost:5555/auth/register", {
+          userName: input.userName,
+          email: input.email,
+          password: input.password,
+        })
+        .then(() => setShowModal(true))
+        .catch(() => setShowModal(false));
+    }
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <RegisterSuccess isVisible={showModal} />
+      {!userNameExists && <RegisterSuccess isVisible={showModal} />}
       <div>
         <label
           className="text-white font-semibold block my-3 text-md"
@@ -127,6 +144,9 @@ const RegisterForm = () => {
         />
         {!passwordValidation && (
           <span className="text-red-600">{errorMessages[2]}</span>
+        )}
+        {!registerDisabled && (
+          <span className="text-red-600">{errorMessages[3]}</span>
         )}
       </div>
 

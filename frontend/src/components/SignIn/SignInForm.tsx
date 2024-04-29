@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import axios from "axios";
 
@@ -20,7 +20,7 @@ const SignInForm = () => {
 
   const [loggedIn, setLoggedIn] = useState(false);
 
-  const submit = async (e: any) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     await axios
