@@ -52,6 +52,14 @@ router.post("/auth/register", async (req, res) => {
   }
 });
 
+router.post("/auth/check-username", async (req, res) => {
+  const { userName } = req.body;
+
+  const userExists = await User.exists({ userName: userName });
+
+  res.send({ exists: userExists });
+});
+
 router.delete("/auth/logout", (req, res) => {
   res.clearCookie("refreshtoken");
 
