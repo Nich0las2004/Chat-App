@@ -1,17 +1,25 @@
 import { useEffect, useState } from "react";
 import { socket } from "../../services/socket";
-// import Message from "../Message/Message";
+import Message from "../Message/Message";
 import { sendMessage } from "../../features/messageSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const MainRoom = () => {
   const dispatch = useDispatch();
   const [input, setInput] = useState<string>("");
-  const [roomNumber, setRoomNumber] = useState<number>(1);
+  // const [roomNumber, setRoomNumber] = useState<number>(1);
+
+  const messagesArr = useSelector((state) => state.message.messages);
 
   const sendHandler = () => {
-    socket.emit("send-message", input, 3);
+    if (input !== "") {
+      socket.emit("send-message", input, "room1");
+    }
   };
+
+  const resetInput = () => {
+    
+  }
 
   useEffect(() => {
     socket.on("connect", () => {
@@ -25,12 +33,16 @@ const MainRoom = () => {
       );
       console.log(response);
     });
-    // sendHandler();
+    sendHandler();
   }, []);
 
   return (
     <div className="flex flex-col h-screen">
-      <div className="flex-grow bg-gray-200 p-4 overflow-y-auto"></div>
+      <div className="flex-grow bg-gray-200 p-4 overflow-y-auto">
+        {messagesArr.map((m: string) => (
+          <Message message={m.message} />
+        ))}
+      </div>
       <div className="bg-gray-300 p-4 flex items-center">
         {/* Message input */}
         <input
