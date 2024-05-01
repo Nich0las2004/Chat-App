@@ -41,6 +41,16 @@ const RegisterForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (!userNameExists) {
+      await axios
+        .post("http://localhost:5555/auth/register", {
+          userName: input.userName,
+          email: input.email,
+          password: input.password,
+        })
+        .then(() => setShowModal(true))
+        .catch(() => setShowModal(false));
+    }
     await axios
       .post("http://localhost:5555/auth/check-username", {
         userName: input.userName,
@@ -53,17 +63,6 @@ const RegisterForm = () => {
         }
       })
       .catch((e) => console.log(e));
-
-    if (!userNameExists) {
-      await axios
-        .post("http://localhost:5555/auth/register", {
-          userName: input.userName,
-          email: input.email,
-          password: input.password,
-        })
-        .then(() => setShowModal(true))
-        .catch(() => setShowModal(false));
-    }
   };
 
   return (
@@ -145,7 +144,7 @@ const RegisterForm = () => {
         {!passwordValidation && (
           <span className="text-red-600">{errorMessages[2]}</span>
         )}
-        {!registerDisabled && (
+        {userNameExists && (
           <span className="text-red-600">{errorMessages[3]}</span>
         )}
       </div>
