@@ -4,3 +4,18 @@ body {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Scrollbar track */
+::-webkit-scrollbar-track {
+  background-color: #374151; /* Dark gray background */
+}
+
+/* Scrollbar thumb */
+::-webkit-scrollbar-thumb {
+  background-color: #805ad5; /* Purple thumb color */
+  border-radius: 3px;
+}

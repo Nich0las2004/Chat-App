@@ -86,5 +86,4 @@ const MainRoom = () => {
     </div>
   );
 };
-
 export default MainRoom;
