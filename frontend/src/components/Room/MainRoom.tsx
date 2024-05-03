@@ -17,9 +17,9 @@ const MainRoom = () => {
     }
   };
 
-  const resetInput = () => {
-    
-  }
+  const messageHandler = (e) => {
+    setInput(e.target.value);
+  };
 
   useEffect(() => {
     socket.on("connect", () => {
@@ -47,7 +47,7 @@ const MainRoom = () => {
         {/* Message input */}
         <input
           type="text"
-          onChange={(e) => setInput(e.target.value)}
+          onChange={messageHandler}
           className="flex-grow bg-white border border-gray-400 rounded px-4 py-2 mr-2 focus:outline-none focus:border-blue-500"
           placeholder="Type your message..."
         />
