@@ -46,6 +46,13 @@ const MainRoom = () => {
 
   return (
     <div className="flex flex-col h-screen">
+      <div className="bg-gray-900 p-4 flex items-center justify-between">
+        <div className="text-purple-300 mr-4">User: test</div>
+        <div className="text-purple-300 mr-4">Room: {roomNumber}</div>
+        <button className="bg-red-600 hover:bg-red-700 focus:outline-none px-4 py-2 rounded-md text-white">
+          Logout
+        </button>
+      </div>
       <div className="flex-grow bg-gray-900 p-4 overflow-y-auto">
         {messagesArr.map((m: string) => (
           <Message message={m.message} />
