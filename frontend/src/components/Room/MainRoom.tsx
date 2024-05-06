@@ -5,6 +5,8 @@ import { sendMessage } from "../../features/messageSlice";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { resetUser } from "../../features/userSlice";
+import { logout } from "../../features/authSlice";
 
 const MainRoom = () => {
   const dispatch = useDispatch();
@@ -16,6 +18,7 @@ const MainRoom = () => {
   const sendHandler = () => {
     if (input !== "") {
       socket.emit("send-message", input, "room1");
+      setInput("");
     }
   };
 
@@ -39,7 +42,8 @@ const MainRoom = () => {
         },
       })
       .then(() => {
-        console.log("Logged out");
+        dispatch(resetUser());
+        dispatch(logout());
         window.location.href = "/login";
       })
       .catch((e) => console.log(e));
@@ -84,6 +88,7 @@ const MainRoom = () => {
         <input
           type="text"
           onChange={messageHandler}
+          value={input}
           className="flex-grow bg-gray-700 text-white border border-gray-600 rounded px-4 py-2 mr-2 focus:outline-none focus:border-purple-500"
           placeholder="Type your message..."
         />
