@@ -3,6 +3,8 @@ import { socket } from "../../services/socket";
 import Message from "../Message/Message";
 import { sendMessage } from "../../features/messageSlice";
 import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
 const MainRoom = () => {
   const dispatch = useDispatch();
@@ -29,6 +31,20 @@ const MainRoom = () => {
     setRoomNumber(parseInt(e.target.value, 10));
   };
 
+  const logoutHandler = async (e) => {
+    await axios
+      .delete("http://localhost:5555/auth/logout", {
+        headers: {
+          Authorization: null,
+        },
+      })
+      .then(() => {
+        console.log("Logged out");
+        window.location.href = "/login";
+      })
+      .catch((e) => console.log(e));
+  };
+
   useEffect(() => {
     socket.on("connect", () => {
       console.log(socket.connected);
@@ -49,9 +65,14 @@ const MainRoom = () => {
       <div className="bg-gray-900 p-4 flex items-center justify-between">
         <div className="text-purple-300 mr-4">User: test</div>
         <div className="text-purple-300 mr-4">Room: {roomNumber}</div>
-        <button className="bg-red-600 hover:bg-red-700 focus:outline-none px-4 py-2 rounded-md text-white">
-          Logout
-        </button>
+        <Link to="/login">
+          <button
+            className="bg-red-600 hover:bg-red-700 focus:outline-none px-4 py-2 rounded-md text-white"
+            onClick={logoutHandler}
+          >
+            Logout
+          </button>
+        </Link>
       </div>
       <div className="flex-grow bg-gray-900 p-4 overflow-y-auto">
         {messagesArr.map((m: string) => (
@@ -80,6 +101,8 @@ const MainRoom = () => {
           type="number"
           onChange={handleInputChange}
           value={roomNumber}
+          min={1}
+          pattern="[1-9][0-9]*"
           className="bg-gray-700 text-white px-3 py-2 rounded-md focus:outline-none mr-2"
           placeholder="Enter room number"
         />
