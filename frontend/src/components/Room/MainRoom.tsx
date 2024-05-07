@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { socket } from "../../services/socket";
 import Message from "../Message/Message";
 import { sendMessage } from "../../features/messageSlice";
@@ -15,6 +16,8 @@ const MainRoom = () => {
 
   const messagesArr = useSelector((state) => state.message.messages);
 
+  const navigate = useNavigate();
+
   const sendHandler = () => {
     if (input !== "") {
       socket.emit("send-message", input, "room1");
@@ -27,14 +30,24 @@ const MainRoom = () => {
   };
 
   const joinRoomHandler = () => {
-    socket.emit("join-room", roomNumber);
+    socket.emit("create-room", roomNumber, (message: string) =>
+      console.log(message)
+    );
+    socket.emit("join-room", roomNumber, (message: string) =>
+      console.log(message)
+    );
+
+    axios.get(`http://localhost:5555/room/${roomNumber}`).then((res) => {
+      console.log(res);
+      navigate(`/room/${roomNumber}`);
+    });
   };
 
   const handleInputChange = (e) => {
     setRoomNumber(parseInt(e.target.value, 10));
   };
 
-  const logoutHandler = async (e) => {
+  const logoutHandler = async () => {
     await axios
       .delete("http://localhost:5555/auth/logout", {
         headers: {
@@ -68,7 +81,7 @@ const MainRoom = () => {
     <div className="flex flex-col h-screen">
       <div className="bg-gray-900 p-4 flex items-center justify-between">
         <div className="text-purple-300 mr-4">User: test</div>
-        <div className="text-purple-300 mr-4">Room: {roomNumber}</div>
+        <div className="text-purple-300 mr-4">Main Room(1)</div>
         <Link to="/login">
           <button
             className="bg-red-600 hover:bg-red-700 focus:outline-none px-4 py-2 rounded-md text-white"
