@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { socket } from "../../services/socket";
 import Message from "../Message/Message";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { sendMessage } from "../../features/messageSlice";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
@@ -81,13 +83,15 @@ const MainRoom = () => {
     <div className="flex flex-col h-screen">
       <div className="bg-gray-900 p-4 flex items-center justify-between">
         <div className="text-purple-300 mr-4">User: test</div>
-        <div className="text-purple-300 mr-4">Main Room(1)</div>
+        <div className="text-purple-300 mr-4">Room</div>
         <Link to="/login">
           <button
+            title="Log Out"
             className="bg-red-600 hover:bg-red-700 focus:outline-none px-4 py-2 rounded-md text-white"
             onClick={logoutHandler}
           >
-            Logout
+            {<FontAwesomeIcon icon={faRightFromBracket} />}
+            {/* Logout */}
           </button>
         </Link>
       </div>
