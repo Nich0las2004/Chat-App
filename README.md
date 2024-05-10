@@ -30,7 +30,7 @@ ChatWave is a real-time chat application built using the MERN stack (MongoDB, Ex
 To get started with ChatWave, follow these simple steps:
 
 1. **Clone this repository** to your local machine:
-   git clone https://github.com/chatwave/chatwave.git
+   git clone [https://github.com/chatwave/chatwave.git](https://github.com/Nich0las2004/Chat-App)
 
 2. npm install
 
