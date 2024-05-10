@@ -35,6 +35,14 @@ io.on("connection", (socket) => {
       cb(`Room ${room} does not exist`);
     }
   });
+  socket.on("leave-room", (room, cb) => {
+    if (io.sockets.adapter.rooms.has(room)) {
+      socket.leave(room);
+      cb(`Left ${room}`);
+    }else{
+      cb(`Cannot leave ${room} as you are not in the room`);
+    }
+  });
 });
 
 // Database connection
