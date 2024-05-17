@@ -123,7 +123,7 @@ const MainRoom = () => {
           type="number"
           onChange={handleInputChange}
           value={roomNumber}
-          min={1}
+          min={2}
           pattern="[1-9][0-9]*"
           className="bg-gray-700 text-white px-3 py-2 rounded-md focus:outline-none mr-2"
           placeholder="Enter room number"
