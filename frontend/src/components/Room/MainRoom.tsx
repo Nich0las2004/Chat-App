@@ -87,7 +87,7 @@ const MainRoom = () => {
 
   return (
     <Fragment>
-      {isLoading && <Loading />}
+      {isLoading && <Loading roomMessage="Joining Room" />}
       {!isLoading && (
         <div className="flex flex-col h-screen">
           <div className="bg-gray-900 p-4 flex items-center justify-between">

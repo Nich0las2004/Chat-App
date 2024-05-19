@@ -26,6 +26,10 @@ const JoinedRoom = () => {
       .catch((e) => console.log(e));
   };
 
+  const leaveRoomHandler = () => {
+    
+  }
+
   return (
     <div className="flex flex-col h-screen">
       <div className="bg-gray-900 p-4 flex items-center justify-between">
@@ -34,7 +38,9 @@ const JoinedRoom = () => {
           Room({roomnum})
         </div>
         <div className="flex items-center space-x-4">
-          <button className="bg-red-600 hover:bg-red-700 focus:outline-none px-4 py-2 rounded-md text-white">
+          <button className="bg-red-600 hover:bg-red-700 focus:outline-none px-4 py-2 rounded-md text-white"
+            onClick={leaveRoomHandler}
+          >
             Leave Room
           </button>
           <Link to="/login">

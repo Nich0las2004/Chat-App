@@ -1,4 +1,10 @@
-const Loading = () => {
+import React from "react";
+
+interface LoadingProps {
+  roomMessage: string;
+}
+
+const Loading: React.FC<LoadingProps> = ({ roomMessage}) => {
   return (
     <div className="flex items-center justify-center h-screen">
       <button
@@ -22,7 +28,7 @@ const Loading = () => {
             fill="#1C64F2"
           ></path>
         </svg>
-        Joining Room...
+        {roomMessage}...
       </button>
     </div>
   );
