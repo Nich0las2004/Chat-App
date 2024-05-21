@@ -1,13 +1,18 @@
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
-import { useDispatch } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { resetUser } from "../../features/userSlice";
 import { logout } from "../../features/authSlice";
+import { socket } from "../../services/socket";
 
 const JoinedRoom = () => {
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
+  const token = useSelector((state: any) => state.auth.accessToken);
 
   const { roomnum } = useParams();
 
@@ -27,34 +32,48 @@ const JoinedRoom = () => {
   };
 
   const leaveRoomHandler = () => {
-    
-  }
+    socket.emit("leaveRoom", roomnum);
+    axios
+      .get(`http://localhost:5555/room`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => {
+        setTimeout(() => {
+          // setIsLoading(true);
+          navigate(`/room`);
+          // setIsLoading(false);
+        }, 2000);
+      });
+  };
 
   return (
     <div className="flex flex-col h-screen">
-      <div className="bg-gray-900 p-4 flex items-center justify-between">
-        <div className="text-purple-300 mr-4">User: test</div>
-        <div className="flex-grow text-center text-purple-300">
-          Room({roomnum})
-        </div>
-        <div className="flex items-center space-x-4">
-          <button className="bg-red-600 hover:bg-red-700 focus:outline-none px-4 py-2 rounded-md text-white"
-            onClick={leaveRoomHandler}
+    <div className="bg-gray-900 p-4 flex items-center justify-between">
+      <div className="text-purple-300 mr-4">User: test</div>
+      <div className="flex-grow text-center text-purple-300">
+        Room({roomnum})
+      </div>
+      <div className="flex items-center space-x-4">
+        <button
+          className="bg-red-600 hover:bg-red-700 focus:outline-none px-4 py-2 rounded-md text-white"
+          onClick={leaveRoomHandler}
+        >
+          Leave Room
+        </button>
+        <Link to="/login">
+          <button
+            title="Log Out"
+            className="bg-red-600 hover:bg-red-700 focus:outline-none px-4 py-2 rounded-md text-white"
+            onClick={logoutHandler}
           >
-            Leave Room
+            {<FontAwesomeIcon icon={faRightFromBracket} />}
           </button>
-          <Link to="/login">
-            <button
-              title="Log Out"
-              className="bg-red-600 hover:bg-red-700 focus:outline-none px-4 py-2 rounded-md text-white"
-              onClick={logoutHandler}
-            >
-              {<FontAwesomeIcon icon={faRightFromBracket} />}
-            </button>
-          </Link>
-        </div>
+        </Link>
       </div>
     </div>
+  </div>
   );
 };
 
