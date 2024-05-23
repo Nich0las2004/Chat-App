@@ -1,6 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+type Message = {
+  message: string;
+};
+
+type State = {
+  messages: Message[];
+};
+
+const initialState: State = {
   messages: [],
 };
 
@@ -10,7 +18,7 @@ const messageSlice = createSlice({
   reducers: {
     sendMessage(state, action) {
       const { message } = action.payload;
-      state.messages.push({ message });
+      state.messages.push(message);
     },
   },
 });
