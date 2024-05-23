@@ -29,7 +29,7 @@ const MainRoom = () => {
     }
   };
 
-  const messageHandler = (e) => {
+  const messageHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
   };
 
@@ -51,7 +51,7 @@ const MainRoom = () => {
     });
   };
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setRoomNumber(parseInt(e.target.value, 10));
   };
 
