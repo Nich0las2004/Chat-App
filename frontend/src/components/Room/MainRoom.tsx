@@ -19,6 +19,7 @@ const MainRoom = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const messagesArr = useSelector((state) => state.message.messages);
+  const userName = useSelector((state) => state.user.username);
 
   const navigate = useNavigate();
 
@@ -77,6 +78,7 @@ const MainRoom = () => {
     socket.on("receive-message", (response) => {
       dispatch(
         sendMessage({
+          user: userName,
           message: response,
         })
       );
