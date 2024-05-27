@@ -80,8 +80,16 @@ const JoinedRoom = () => {
               </Link>
             </div>
           </div>
-          <div className="flex-grow bg-gray-900 p-4 overflow-y-auto">
-            
+          <div className="flex-grow bg-gray-900 p-4 overflow-y-auto"></div>
+          <div className="bg-gray-800 p-4 flex items-center">
+            <input
+              type="text"
+              className="flex-grow bg-gray-700 text-white border border-gray-500 rounded-lg px-4 py-2 mr-2 focus:outline-none focus:border-purple-500"
+              placeholder="Type your message..."
+            />
+            <button className="bg-purple-600 hover:bg-purple-700 focus:outline-none px-4 py-2 rounded-md text-white">
+              Send
+            </button>
           </div>
         </div>
       )}
