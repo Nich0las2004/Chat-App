@@ -14,6 +14,8 @@ const JoinedRoom = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
+  const [input, setInput] = useState<string>("");
+
   const navigate = useNavigate();
 
   const token = useSelector((state: any) => state.auth.accessToken);
@@ -52,6 +54,16 @@ const JoinedRoom = () => {
       });
   };
 
+  const messageHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(e.target.value);
+  };
+
+  const sendHandler = () => {
+    if (input !== "") {
+      setInput("");
+    }
+  };
+
   return (
     <Fragment>
       {isLoading && <Loading roomMessage="Leaving Room" />}
@@ -84,10 +96,15 @@ const JoinedRoom = () => {
           <div className="bg-gray-800 p-4 flex items-center">
             <input
               type="text"
+              onChange={messageHandler}
+              value={input}
               className="flex-grow bg-gray-700 text-white border border-gray-500 rounded-lg px-4 py-2 mr-2 focus:outline-none focus:border-purple-500"
               placeholder="Type your message..."
             />
-            <button className="bg-purple-600 hover:bg-purple-700 focus:outline-none px-4 py-2 rounded-md text-white">
+            <button
+              onClick={sendHandler}
+              className="bg-purple-600 hover:bg-purple-700 focus:outline-none px-4 py-2 rounded-md text-white"
+            >
               Send
             </button>
           </div>
