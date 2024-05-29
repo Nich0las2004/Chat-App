@@ -11,6 +11,13 @@ const errorMessages = [
   "User with that username already exists!",
 ];
 
+const initialInputState = {
+  userName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+};
+
 const RegisterForm = () => {
   const [passwordsMatch, setPasswordsMatch] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -63,6 +70,8 @@ const RegisterForm = () => {
         }
       })
       .catch((e) => console.log(e));
+
+      setInput(initialInputState);
   };
 
   return (
@@ -76,8 +85,9 @@ const RegisterForm = () => {
           Username
         </label>
         <input
+          value={input.userName}
           onChange={(e) => {
-            setInput({ ...input, userName: e.target.value });
+            setInput((prevState) => ({ ...prevState, userName: e.target.value }));
           }}
           className="w-full bg-gray-100 px-4 py-2 focus:outline-none focus:ring-indigo-600 focus:ring-1 rounded-md"
           type="text"
@@ -96,8 +106,9 @@ const RegisterForm = () => {
           Email
         </label>
         <input
+          value={input.email}
           onChange={(e) => {
-            setInput({ ...input, email: e.target.value });
+            setInput((prevState) => ({ ...prevState, email: e.target.value }));
           }}
           className="w-full bg-gray-100 px-4 py-2 focus:outline-none focus:ring-indigo-600 focus:ring-1 rounded-md"
           type="text"
@@ -116,8 +127,9 @@ const RegisterForm = () => {
           Password
         </label>
         <input
+          value={input.password}
           onChange={(e) => {
-            setInput({ ...input, password: e.target.value });
+            setInput((prevState) => ({ ...prevState, password: e.target.value }));
           }}
           className="w-full bg-gray-100 px-4 py-2 focus:outline-none focus:ring-indigo-600 focus:ring-1 rounded-md"
           type="password"
@@ -133,8 +145,9 @@ const RegisterForm = () => {
           Confirm password
         </label>
         <input
+        value={input.confirmPassword}
           onChange={(e) => {
-            setInput({ ...input, confirmPassword: e.target.value });
+            setInput((prevState) => ({ ...prevState, confirmPassword: e.target.value }));
           }}
           className="w-full bg-gray-100 px-4 py-2 focus:outline-none focus:ring-indigo-600 focus:ring-1 rounded-md"
           type="password"
