@@ -1,6 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+type Props = {
+  isVisible: boolean;
+};
 
 const RegisterSuccess: React.FC<Props> = ({ isVisible }) => {
   return (
