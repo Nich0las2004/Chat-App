@@ -10,7 +10,7 @@ const RegisterSuccess: React.FC<Props> = ({ isVisible }) => {
     <>
       {isVisible && (
         <div className="bg-black fixed inset-0 p-6 bg-opacity-25 backdrop-blur-sm flex justify-center items-center">
-          <div className="bg-white p-6 w-4/12 rounded-md  md:mx-auto">
+          <div className="bg-white p-6 w-full md:w-4/12 rounded-md mx-auto">
             <svg
               viewBox="0 0 24 24"
               className="text-green-600 w-16 h-16 mx-auto my-6"
@@ -26,7 +26,7 @@ const RegisterSuccess: React.FC<Props> = ({ isVisible }) => {
               </h3>
               <div className="py-10 text-center">
                 <Link to="/login">
-                  <button className="px-12 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3">
+                  <button className="w-full md:w-auto px-4 md:px-12 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3">
                     GO BACK TO LOGIN
                   </button>
                 </Link>
