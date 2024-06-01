@@ -21,7 +21,6 @@ const initialInputState = {
 const RegisterForm = () => {
   const [passwordsMatch, setPasswordsMatch] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [userNameExists, setUserNameExists] = useState<boolean>(false);
   const [input, setInput] = useState({
     userName: "",
     email: "",
@@ -48,7 +47,6 @@ const RegisterForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!userNameExists) {
       await axios
         .post("http://localhost:5555/auth/register", {
           userName: input.userName,
@@ -57,26 +55,15 @@ const RegisterForm = () => {
         })
         .then(() => setShowModal(true))
         .catch(() => setShowModal(false));
-    }
-    await axios
-      .post("http://localhost:5555/auth/check-username", {
-        userName: input.userName,
-      })
-      .then((res) => {
-        if (res.data.exists) {
-          setUserNameExists(true);
-        } else {
-          setUserNameExists(false);
-        }
-      })
-      .catch((e) => console.log(e));
 
-      setInput(initialInputState);
+
+    setInput(initialInputState);
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      {!userNameExists && <RegisterSuccess isVisible={showModal} />}
+      {/* {!userNameExists && <RegisterSuccess isVisible={showModal} />} */}
+      {showModal && <RegisterSuccess isVisible={showModal} />}
       <div>
         <label
           className="text-white font-semibold block my-3 text-md"
@@ -87,7 +74,10 @@ const RegisterForm = () => {
         <input
           value={input.userName}
           onChange={(e) => {
-            setInput((prevState) => ({ ...prevState, userName: e.target.value }));
+            setInput((prevState) => ({
+              ...prevState,
+              userName: e.target.value,
+            }));
           }}
           className="w-full bg-gray-100 px-4 py-2 focus:outline-none focus:ring-indigo-600 focus:ring-1 rounded-md"
           type="text"
@@ -129,7 +119,10 @@ const RegisterForm = () => {
         <input
           value={input.password}
           onChange={(e) => {
-            setInput((prevState) => ({ ...prevState, password: e.target.value }));
+            setInput((prevState) => ({
+              ...prevState,
+              password: e.target.value,
+            }));
           }}
           className="w-full bg-gray-100 px-4 py-2 focus:outline-none focus:ring-indigo-600 focus:ring-1 rounded-md"
           type="password"
@@ -145,9 +138,12 @@ const RegisterForm = () => {
           Confirm password
         </label>
         <input
-        value={input.confirmPassword}
+          value={input.confirmPassword}
           onChange={(e) => {
-            setInput((prevState) => ({ ...prevState, confirmPassword: e.target.value }));
+            setInput((prevState) => ({
+              ...prevState,
+              confirmPassword: e.target.value,
+            }));
           }}
           className="w-full bg-gray-100 px-4 py-2 focus:outline-none focus:ring-indigo-600 focus:ring-1 rounded-md"
           type="password"
@@ -156,9 +152,6 @@ const RegisterForm = () => {
         />
         {!passwordValidation && (
           <span className="text-red-600">{errorMessages[2]}</span>
-        )}
-        {userNameExists && (
-          <span className="text-red-600">{errorMessages[3]}</span>
         )}
       </div>
 
