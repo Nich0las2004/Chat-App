@@ -93,8 +93,10 @@ const MainRoom = () => {
       {!isLoading && (
         <div className="flex flex-col h-screen">
           <div className="bg-gray-900 p-4 flex items-center justify-between">
-            <div className="text-purple-300 mr-4">User: test</div>
-            <div className="text-purple-300 mr-4">Room</div>
+            <div className="text-purple-300 mr-4 text-lg">
+              User: {userName}
+            </div>
+            <div className="text-purple-300 mr-4 text-lg">Room</div>
             <Link to="/login">
               <button
                 title="Log Out"
