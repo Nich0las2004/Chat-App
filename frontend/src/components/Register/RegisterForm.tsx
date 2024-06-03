@@ -3,6 +3,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import emailValidator from "email-validator";
 import RegisterSuccess from "./RegisterSuccess";
+import RegisterLoginButton from "./RegisterLoginButton";
 
 const errorMessages = [
   "Username should be 3-16 characters long and should not include special characters!",
@@ -47,15 +48,14 @@ const RegisterForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-      await axios
-        .post("http://localhost:5555/auth/register", {
-          userName: input.userName,
-          email: input.email,
-          password: input.password,
-        })
-        .then(() => setShowModal(true))
-        .catch(() => setShowModal(false));
-
+    await axios
+      .post("http://localhost:5555/auth/register", {
+        userName: input.userName,
+        email: input.email,
+        password: input.password,
+      })
+      .then(() => setShowModal(true))
+      .catch(() => setShowModal(false));
 
     setInput(initialInputState);
   };
@@ -171,12 +171,7 @@ const RegisterForm = () => {
       {/* redirect to login button  */}
 
       <Link to="/login">
-        <button
-          type="submit"
-          className="w-full mt-6 mb-3 bg-indigo-100 rounded-lg px-4 py-2 text-lg text-gray-800 tracking-wide font-semibold font-sans"
-        >
-          Login
-        </button>
+        <RegisterLoginButton />
       </Link>
     </form>
   );
