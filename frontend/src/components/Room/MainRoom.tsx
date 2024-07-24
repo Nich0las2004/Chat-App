@@ -15,7 +15,7 @@ import Loading from "../Loading/Loading";
 const MainRoom = () => {
   const dispatch = useDispatch();
   const [input, setInput] = useState<string>("");
-  const [roomNumber, setRoomNumber] = useState<number>(1);
+  const [roomNumber, setRoomNumber] = useState<number>(2);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const messagesArr = useSelector((state) => state.message.messages);
@@ -98,7 +98,7 @@ const MainRoom = () => {
             <div className="text-purple-300 mr-4 text-lg">
               User: {userName}
             </div>
-            <div className="text-purple-300 mr-4 text-lg">Room</div>
+            <div className="text-purple-300 mr-4 text-lg">Main Room</div>
             <Link to="/login">
               <button
                 title="Log Out"
@@ -139,7 +139,6 @@ const MainRoom = () => {
               onChange={handleInputChange}
               value={roomNumber}
               min={2}
-              pattern="[1-9][0-9]*"
               className="bg-gray-700 text-white px-3 py-2 rounded-md focus:outline-none mr-2"
               placeholder="Enter room number"
             />
