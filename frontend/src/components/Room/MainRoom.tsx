@@ -75,6 +75,8 @@ const MainRoom = () => {
     socket.on("connect", () => {
       console.log(socket.connected);
     });
+    socket.emit("create-room", "room1", (response: string) => console.log(response));
+    socket.emit("join-room", "room1", (response: string) => console.log(response));
     socket.on("receive-message", (response) => {
       dispatch(
         sendMessage({
