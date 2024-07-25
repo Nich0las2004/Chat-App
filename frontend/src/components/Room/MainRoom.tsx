@@ -75,8 +75,12 @@ const MainRoom = () => {
     socket.on("connect", () => {
       console.log(socket.connected);
     });
-    socket.emit("create-room", "room1", (response: string) => console.log(response));
-    socket.emit("join-room", "room1", (response: string) => console.log(response));
+    socket.emit("create-room", "room1", (response: string) =>
+      console.log(response)
+    );
+    socket.emit("join-room", "room1", (response: string) =>
+      console.log(response)
+    );
     socket.on("receive-message", (response) => {
       dispatch(
         sendMessage({
@@ -95,9 +99,7 @@ const MainRoom = () => {
       {!isLoading && (
         <div className="flex flex-col h-screen">
           <div className="bg-gray-900 p-4 flex items-center justify-between">
-            <div className="text-purple-300 mr-4 text-lg">
-              User: {userName}
-            </div>
+            <div className="text-purple-300 mr-4 text-lg">User: {userName}</div>
             <div className="text-purple-300 mr-4 text-lg">Main Room</div>
             <Link to="/login">
               <button
@@ -111,8 +113,10 @@ const MainRoom = () => {
             </Link>
           </div>
           <div className="flex-grow bg-gray-900 p-4 overflow-y-auto">
-            {messagesArr.map((m: string) => (
-              <Message message={m.message} />
+            {messagesArr.map((m: string, index: number) => (
+              <div key={index}>
+                <Message message={m.message} />
+              </div>
             ))}
           </div>
           <div className="bg-gray-800 p-4 flex items-center">
